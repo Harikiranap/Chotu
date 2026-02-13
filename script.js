@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, observerOptions);
 
     // Select elements to animate
-    const animatedElements = document.querySelectorAll('.gallery-item, .section-title, .instruction');
+    const animatedElements = document.querySelectorAll('.gallery-slider, .section-title, .instruction');
     
     // Initial styles for animation
     animatedElements.forEach(el => {

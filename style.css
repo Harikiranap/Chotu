@@ -241,6 +241,7 @@ section {
     transition: transform 0.4s ease-in-out 0.4s, z-index 0.2s;
     top: 0;
     left: 0;
+    z-index: 5; /* Ensure flap is on top of pocket */
 }
 
 .pocket {

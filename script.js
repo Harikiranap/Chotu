@@ -40,21 +40,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 3. Optional Music Player Logic
     const playBtn = document.getElementById('play-pause');
-    const audio = new Audio('music.mp3'); // Placeholder for user's music file
+    const audio = new Audio('music.mp3'); 
+    audio.loop = true; // Loop the music
     let isPlaying = false;
 
+    // Function to toggle play/pause
+    const togglePlay = () => {
+        if (isPlaying) {
+            audio.pause();
+            if (playBtn) playBtn.innerHTML = '<i class="fas fa-heart"></i>';
+        } else {
+            audio.play().catch(e => console.log("Audio play failed:", e));
+            if (playBtn) playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        }
+        isPlaying = !isPlaying;
+    };
+
     if (playBtn) {
-        playBtn.addEventListener('click', () => {
-            if (isPlaying) {
-                audio.pause();
-                playBtn.innerHTML = '<i class="fas fa-heart"></i>';
-            } else {
-                audio.play().catch(e => console.log("Audio file not found or interaction required"));
-                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-            }
-            isPlaying = !isPlaying;
+        playBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent triggering other clicks
+            togglePlay();
         });
     }
+
+    // Auto-play logic
+    const attemptPlay = () => {
+        audio.play().then(() => {
+            isPlaying = true;
+            if (playBtn) playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        }).catch(error => {
+            console.log("Autoplay prevented by browser. Waiting for interaction.");
+            // Fallback: Play on first user interaction (click anywhere)
+            const enableAudio = () => {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    if (playBtn) playBtn.innerHTML = '<i class="fas fa-pause"></i>'; // Update icon
+                    document.removeEventListener('click', enableAudio);
+                }).catch(err => console.log("Still waiting for interaction"));
+            };
+            document.addEventListener('click', enableAudio);
+        });
+    };
+
+    attemptPlay();
 
     // 4. Dynamic Greeting based on time (Optional but nice)
     const hour = new Date().getHours();

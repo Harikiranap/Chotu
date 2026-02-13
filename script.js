@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
         envelope.classList.toggle('open');
         if (envelope.classList.contains('open')) {
             createConfetti();
+            attemptPlay(); // Try playing audio on interaction
         }
     });
 

@@ -203,7 +203,8 @@ section {
     position: relative;
     width: 300px;
     height: 200px;
-    margin-top: 50px;
+    margin-top: 120px; /* Increased to prevent overlap with title */
+    margin-bottom: 150px; /* Space for extending letter */
     cursor: pointer;
 }
 
@@ -226,11 +227,12 @@ section {
 }
 
 /* Flap logic */
+/* Flap logic */
 .front {
     position: absolute;
     width: 0;
     height: 0;
-    z-index: 3;
+    z-index: 10;
 }
 
 .flap {
@@ -241,7 +243,7 @@ section {
     transition: transform 0.4s ease-in-out 0.4s, z-index 0.2s;
     top: 0;
     left: 0;
-    z-index: 5; /* Ensure flap is on top of pocket */
+    z-index: 20; /* Highest priority */
 }
 
 .pocket {
@@ -250,7 +252,7 @@ section {
     border-bottom: 100px solid #ff4d6d; /* Lighter red */
     bottom: 0;
     left: 0;
-    z-index: 4;
+    z-index: 15; /* Above letter, below flap */
 }
 
 /* Letter Styles */
@@ -292,13 +294,13 @@ section {
 /* Open State Animation */
 .envelope-container.open .flap {
     transform: rotateX(180deg);
-    z-index: 0; 
+    z-index: 1; /* Send flap to back when open */
     transition: transform 0.6s ease-in-out;
 }
 
 .envelope-container.open .letter {
     transform: translateY(-150px); /* Slides up more to reveal content */
-    z-index: 5;
+    z-index: 25; /* Highest layer when reading */
     height: auto; 
     max-height: 500px; /* Allow expansion */
     overflow-y: auto; /* Scroll if too long */

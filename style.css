@@ -386,13 +386,32 @@ section {
     z-index: 20; /* Highest priority */
 }
 
-.pocket {
+/* New Side Folds */
+.left-fold {
     border-left: 150px solid #e63946;
+    border-top: 100px solid transparent;
+    border-bottom: 100px solid transparent;
+    top: 0;
+    left: 0;
+    z-index: 12;
+}
+
+.right-fold {
     border-right: 150px solid #e63946;
+    border-top: 100px solid transparent;
+    border-bottom: 100px solid transparent;
+    top: 0;
+    right: 0;
+    z-index: 12;
+}
+
+.pocket {
+    border-left: 150px solid transparent;
+    border-right: 150px solid transparent;
     border-bottom: 100px solid #ff4d6d; /* Lighter red */
     bottom: 0;
     left: 0;
-    z-index: 15; /* Above letter, below flap */
+    z-index: 15; /* Above side folds */
 }
 
 /* Letter Styles */
@@ -443,9 +462,10 @@ section {
     z-index: 25; /* Highest layer when reading */
     height: auto; 
     max-height: 500px; /* Allow expansion */
-    overflow-y: auto; /* Scroll if too long */
+    overflow-y: visible; /* Ensure content is meant to be seen */
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55), z-index 0s 0.6s; /* Delay z-index to avoid overlap during slide */
+    /* Delay transform slightly to let flap open. Delay z-index change until completely out */
+    transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.4s, z-index 0.1s linear 0.6s;
 }
 
 /* Instruction Text */
